@@ -12,10 +12,10 @@
     <h1>Create a new Project</h1>
     
 <form method="POST" action="/projects">
-   // {{csrf_field}}
+    {{csrf_field()}}
 
     <div>
-    <input type="text" name "title" placeholder="Project title">
+    <input type="text" name="title" placeholder="Project title">
     </div>
     
     <div>
