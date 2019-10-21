@@ -1,33 +1,48 @@
-<!DOCTYPE html>
+@extends('layout')
 
-<html>
+@section('content')
 
-<head>
 
-<title></title>
-
-</head>
-
-<body>
-    <h1>Create a new Project</h1>
+    <h1 class="title">Create a new Project</h1>
     
 <form method="POST" action="/projects">
     {{csrf_field()}}
 
-    <div>
-    <input type="text" name="title" placeholder="Project title">
+    <div class="field">
+    <label class="label" for="title">Project Title</label>
+    
+    <div class="control">
+    
+    <input type="text" class="input" name="title" value="{{old('title')}}">
+    
+    </div>
     </div>
     
-    <div>
-        <textarea name ="description" placeholder="Project description"></textarea>
-
+    <div class="field">
+        <label class="label" for="description">Project Description</label>
+        
+        <div class="control">
+        <textarea name ="description" class="textarea">{{old('description')}}</textarea>
+    </div>
     </div>
     
-    <div>
-        <button type="submit">Create Project</button>
+    <div class="field">
+        <div class ="control">
+        <button type="submit" class="button is-link">Create Project</button>
     </div>
+    </div>
+    
+    
+    @if ($errors->any())
+    <div class="notification is-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+            <li> {{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    
 </form>
 
-</body>
-
-</html>
+@endsection
