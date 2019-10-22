@@ -6,6 +6,14 @@
 
 <title></title>
 
+<style>
+
+.is-complete{
+    text-decoration: line-through;
+}
+
+</style>
+
 </head>
 
 <body>
