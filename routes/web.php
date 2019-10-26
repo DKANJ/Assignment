@@ -10,9 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Repositories\UserRepository;
 
-Route::get('/', function () {
+Route::get('/', function (UserRepository $users) {
+
+    dd($users);    
     return view('welcome');
+    
+    
 });
 
 /*
