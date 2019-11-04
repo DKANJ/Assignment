@@ -10,11 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Repositories\UserRepository;
 
-Route::get('/', function (UserRepository $users) {
+//use App\Services\Twitter;
 
-    dd($users);    
+Route::get('/', function () {
     return view('welcome');
     
     
@@ -47,3 +46,7 @@ Route::patch('/tasks/{task}', 'ProjectTasksController@update');
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -10,19 +10,22 @@ use Illuminate\Filesystem\Filesystem;
 
 class ProjectsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::where('owner_id', auth()->id())->get(); //select * from projects where owner_id = 4
         
-       // return $projects;
+       
         return view('projects.index', compact('projects'));
     }
     
-    public function show(Project $project, Twitter $twitter)
+    public function show(Project $project)
     {
         
-        
-        dd($twitter);
         
         return view('projects.show', compact('project'));
     }
@@ -34,15 +37,15 @@ class ProjectsController extends Controller
     
     public function store()
     {
-       Project::create(
+       $attributes = request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'min:3']
        
-       request()->validate([
-            'title'=>['required', 'min:3', 'max:255'],
-            'description' =>['required', 'min:3']
+       ]);
+       
+        Project::create($attributes + ['owner_id' => auth()->id()]);
         
-            ])
-        );
-        
+    
         
         return redirect('/projects');
     }
