@@ -30,7 +30,7 @@ Route::get('/', function () {
  */
 
 
-Route::resource('projects', 'ProjectsController');
+Route::resource('projects', 'ProjectsController')->middleware('can:update,project');
 
 //Route::get('/projects', 'ProjectsController@index');
 //Route::get('/projects/create', 'ProjectsController@create');

@@ -25,10 +25,7 @@
         
         <div class="control">
         <textarea name ="description" class="textarea"
-        required>
-        
-        {{old('description')}}
-        </textarea>
+        required>{{old('description')}}</textarea>
     </div>
     </div>
     

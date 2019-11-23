@@ -17,15 +17,20 @@ class ProjectsController extends Controller
     
     public function index()
     {
-        $projects = Project::where('owner_id', auth()->id())->get(); //select * from projects where owner_id = 4
-        
        
-        return view('projects.index', compact('projects'));
+        return view('projects.index', [
+        
+            'projects' => auth()->user()->projects
+            
+        ]);
     }
     
     public function show(Project $project)
     {
         
+       // $this->authorize('update', $project);
+        
+      // abort_unless(\Gate::allows('update', $project), 404);
         
         return view('projects.show', compact('project'));
     }
@@ -37,11 +42,7 @@ class ProjectsController extends Controller
     
     public function store()
     {
-       $attributes = request()->validate([
-            'title' => ['required', 'min:3'],
-            'description' => ['required', 'min:3']
-       
-       ]);
+        $attributes = $this->validateProject();
        
         Project::create($attributes + ['owner_id' => auth()->id()]);
         
@@ -58,17 +59,28 @@ class ProjectsController extends Controller
     
     public function update(Project $project)
     {
-        
-        $project->update(request(['title', 'description']));
+       
+        $project->update($this->validateProject());
         
         return redirect('/projects');
     }
     
     public function destroy(Project $project)
     {
+       
+        
         $project->delete();
         
         return redirect('/projects');
+    }
+    
+    protected function validateProject()
+    {
+        return request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'min:3']
+       
+       ]);
     }
 }
 
